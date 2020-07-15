@@ -1,0 +1,62 @@
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>課題一覧</title>
+  <link rel="stylesheet" type="text/css" href="/views/css/task.css">
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.5.13/dist/vue.js" defer></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js" defer></script>
+  <script src="/views/js/vueTask.js" defer></script>
+</head>
+
+<body>
+  <div id="app">
+    <h1 v-on:click="getAllTasks"><a href="/tasks">課題一覧表</a></h1>
+    <label v-for="label in options">
+      <input type="radio" v-model="current" v-bind:value="label.value">{{ label.label }}
+    </label>
+    <p>課題名：<input type="text" name='taskName' v-model="taskName" v-bind:class="{'alert-color': !validate }"
+        value='' size="40" placeholder="※入力してください"></p>
+    <p>改善策：<input type="text" name='taskMemo' v-model="taskMemo" value='' size="40"></p>
+    <button v-on:click="createTask" v-bind:disabled="!isEntered">
+      追加
+    </button>
+    <hr>
+    <table>
+      <thead v-pre>
+        <tr>
+          <th class="index">No</th>
+          <th class="name">課題名</th>
+          <th class="memo">改善策</th>
+          <th class="state">状態</th>
+          <th class="delete">削除</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(item, index) in computedTasks">
+          <td class="index">
+            <button v-on:click="getTaskById(item)">
+              {{ index + 1 }}
+            </button>
+          </td>
+          <td class="name">
+              {{ item.name }}
+          </td>
+          <td class="memo">{{ item.memo }}</td>
+          <td class="state">
+            <button v-on:click="changeTaskState(item)">
+              {{ labels[item.state] }}
+            </button>
+          </td>
+          <td class="delete">
+            <button v-on:click="deleteTask(item)">
+              削除
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</body>
+
+</html>
