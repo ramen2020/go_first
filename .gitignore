@@ -17,6 +17,8 @@ https://github.com/simonwhitaker/gibo
 *.out
 
 # Dependency directories (remove the comment below to include it)
+
 # vendor/
 
-
+# file
+/config.ini
